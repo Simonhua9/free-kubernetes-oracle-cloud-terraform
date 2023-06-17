@@ -4,7 +4,8 @@ provider "oci" {
 
 module "vcn" {
   source  = "oracle-terraform-modules/vcn/oci"
-  version = "3.1.0"
+  #Latest module version can be found at https://registry.terraform.io/modules/oracle-terraform-modules/vcn/oci/latest 3.5.4 as June 16 2023
+  version = "3.5.4"
 
   compartment_id = var.compartment_id
   region         = var.region
@@ -188,7 +189,8 @@ locals {
 data "oci_core_images" "latest_image" {
   compartment_id = var.compartment_id
   operating_system = "Oracle Linux"
-  operating_system_version = "7.9"
+  # https://docs.oracle.com/en-us/iaas/images/ Oracle has a OKE worker node, but for this lab, I still use default Oracle Linux.
+  operating_system_version = "8.7"
   filter {
     name   = "display_name"
     values = ["^.*aarch64-.*$"]
@@ -199,7 +201,8 @@ data "oci_core_images" "latest_image" {
 resource "oci_containerengine_node_pool" "k8s_node_pool" {
   cluster_id         = oci_containerengine_cluster.k8s_cluster.id
   compartment_id     = var.compartment_id
-  kubernetes_version = "v1.21.5"
+  # Kubernetes version history https://kubernetes.io/releases/
+  kubernetes_version = "v1.27.2"
   name               = "free-k8s-node-pool"
   node_config_details {
     dynamic placement_configs {
