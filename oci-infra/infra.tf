@@ -225,7 +225,10 @@ resource "oci_containerengine_node_pool" "k8s_node_pool" {
   }
 
   node_source_details {
-    image_id    = data.oci_core_images.latest_image.images.0.id
+    # data.oci_core_images.latest_image.images got error "data.oci_core_images.latest_image.images is empty list of object", then specify the image_id directly.
+    # image_id    = data.oci_core_images.latest_image.images.0.id
+    # image_id can be found at https://docs.oracle.com/en-us/iaas/images
+    image_id  = "ocid1.image.oc1.ca-toronto-1.aaaaaaaadn4pdtvqk25vokjyqjqjymunrkpa2xrpedopqqgcntv2uujfeska"
     source_type = "image"
   }
 
