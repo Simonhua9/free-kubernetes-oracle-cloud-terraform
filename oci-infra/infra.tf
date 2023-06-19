@@ -156,7 +156,8 @@ resource "oci_core_subnet" "vcn_public_subnet" {
 resource "oci_containerengine_cluster" "k8s_cluster" {
   compartment_id     = var.compartment_id
   # Kubernetes version history https://kubernetes.io/releases/
-  kubernetes_version = "v1.27.2"
+  # supported version from Oracle can be found from the script running. It is 1.26.2 as June 18 2023. The latest version is 1.27.2 but OCI only supports 1.26.2
+  kubernetes_version = "v1.26.2"
   name               = "free-k8s-cluster"
   vcn_id             = module.vcn.vcn_id
 
