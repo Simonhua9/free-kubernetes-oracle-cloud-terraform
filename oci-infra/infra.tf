@@ -155,7 +155,8 @@ resource "oci_core_subnet" "vcn_public_subnet" {
 
 resource "oci_containerengine_cluster" "k8s_cluster" {
   compartment_id     = var.compartment_id
-  kubernetes_version = "v1.21.5"
+  # Kubernetes version history https://kubernetes.io/releases/
+  kubernetes_version = "v1.27.2"
   name               = "free-k8s-cluster"
   vcn_id             = module.vcn.vcn_id
 
@@ -217,9 +218,10 @@ resource "oci_containerengine_node_pool" "k8s_node_pool" {
   }
   node_shape = "VM.Standard.A1.Flex"
 
+# change the RAM to 12G, and cpu to 2. For free tier, the settings can be found at https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm 
   node_shape_config {
-    memory_in_gbs = 6
-    ocpus         = 1
+    memory_in_gbs = 12
+    ocpus         = 2
   }
 
   node_source_details {
